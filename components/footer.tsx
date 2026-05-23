@@ -19,8 +19,8 @@ export function Footer() {
           <div>
             <h3 className="text-sm font-light text-foreground mb-4">Social</h3>
             <ul className="space-y-2 text-sm text-muted-foreground font-light">
-              <li><a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">GitHub</a></li>
-              <li><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">LinkedIn</a></li>
+              <li><a href="https://github.com/Aiman03-del" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">GitHub</a></li>
+              <li><a href="https://www.linkedin.com/in/aiman-uddin-721011204" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">LinkedIn</a></li>
               <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">Twitter</a></li>
             </ul>
           </div>

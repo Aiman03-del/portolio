@@ -118,8 +118,8 @@ export function ContactSection() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {[
             { label: 'Email', value: 'hello@aiman.dev', href: 'mailto:hello@aiman.dev' },
-            { label: 'LinkedIn', value: 'linkedin.com/in/aiman', href: '#' },
-            { label: 'GitHub', value: 'github.com/aiman', href: '#' },
+              { label: 'LinkedIn', value: 'Aiman Uddin Siam', href: 'https://www.linkedin.com/in/aiman-uddin-721011204' },
+              { label: 'GitHub', value: 'Aiman03-del', href: 'https://github.com/Aiman03-del' },
           ].map((contact, index) => (
             <a
               key={contact.label}
