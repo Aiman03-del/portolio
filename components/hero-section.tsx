@@ -180,8 +180,8 @@ export function HeroSection({ stats }: HeroSectionProps) {
       </div>
 
       {/* ── HERO CONTENT OVERLAY ── */}
-      <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-20 lg:pt-24 pb-10 lg:pb-12 min-h-screen flex items-center">
-        <div className="w-full flex items-center justify-between gap-8">
+      <div className="relative z-10 mx-auto max-w-7xl px-6 sm:px-8 lg:px-12 pt-12 md:pt-20 lg:pt-24 pb-8 md:pb-10 lg:pb-12 flex items-start md:items-center">
+        <div className="w-full flex items-start md:items-center justify-between gap-8">
 
           {/* LEFT: Text */}
           <div ref={textRef} className="flex flex-col space-y-4 lg:space-y-5 max-w-xl">
