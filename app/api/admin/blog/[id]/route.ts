@@ -1,8 +1,10 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -28,7 +30,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const { data, error } = await adminSupabase
       .from('blog_posts')
       .update(row)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
     if (error) throw error;
@@ -46,8 +48,10 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -60,10 +64,15 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
 
-    const { error } = await adminSupabase.from('blog_posts').delete().eq('id', params.id);
+    const { error } = await adminSupabase.from('blog_posts').delete().eq('id', id);
     if (error) throw error;
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete blog post' }, { status: 500 });
+    return NextResponse.json(
+      {
+        error: error instanceof Error ? error.message : 'Failed to delete blog post',
+      },
+      { status: 500 },
+    );
   }
 }

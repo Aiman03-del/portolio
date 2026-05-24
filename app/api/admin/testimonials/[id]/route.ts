@@ -1,8 +1,11 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { normalizeTestimonial } from '@/lib/db/testimonials';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -27,18 +30,23 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const { data, error } = await adminSupabase
       .from('testimonials')
       .update(row)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
     if (error) throw error;
-    return NextResponse.json(data);
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update testimonial' }, { status: 500 });
+    return NextResponse.json(normalizeTestimonial(data));
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error?.message ?? 'Failed to update testimonial' },
+      { status: 500 },
+    );
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -51,10 +59,13 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
 
-    const { error } = await adminSupabase.from('testimonials').delete().eq('id', params.id);
+    const { error } = await adminSupabase.from('testimonials').delete().eq('id', id);
     if (error) throw error;
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete testimonial' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error?.message ?? 'Failed to delete testimonial' },
+      { status: 500 },
+    );
   }
 }

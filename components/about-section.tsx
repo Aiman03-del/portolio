@@ -9,6 +9,10 @@ interface AboutSectionProps {
 }
 
 export function AboutSection({ skills }: AboutSectionProps) {
+  if (skills.length === 0) {
+    return null;
+  }
+
   const ref = useScrollAnimation();
 
   return (
@@ -60,11 +64,6 @@ export function AboutSection({ skills }: AboutSectionProps) {
           ))}
         </div>
 
-        {skills.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Skills coming soon!</p>
-          </div>
-        )}
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type RefObject } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -11,8 +11,8 @@ interface UseScrollAnimationOptions {
   markers?: boolean;
 }
 
-export function useScrollAnimation(options?: UseScrollAnimationOptions) {
-  const ref = useRef<HTMLElement>(null);
+export function useScrollAnimation(options?: UseScrollAnimationOptions): RefObject<HTMLDivElement> {
+  const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (!ref.current) return;

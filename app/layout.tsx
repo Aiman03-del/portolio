@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
-import 'react-toastify/dist/ReactToastify.css'
 import './globals.css'
-import { AppToastContainer } from '@/components/ui/app-toast-container'
+import { Toaster } from '@/components/ui/sonner'
 import { NavigationLoader } from '@/components/navigation-loader'
 
 const _geist = Geist({ subsets: ["latin"] });
@@ -47,7 +46,7 @@ export default function RootLayout({
       <body className="font-sans antialiased">
         <NavigationLoader />
         {children}
-        <AppToastContainer />
+        <Toaster position="bottom-center" richColors closeButton />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

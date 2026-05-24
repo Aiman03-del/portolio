@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
 
 interface Project {
   id: string;
@@ -107,8 +107,8 @@ export default function ProjectsAdminPage() {
   };
 
   const confirmDelete = (id: string) => {
-    const toastId = toast.info(
-      <div className="space-y-2">
+    toast.custom((toastId) => (
+      <div className="space-y-2 rounded-xl border border-border bg-card p-4 text-foreground shadow-xl">
         <p className="text-sm">Delete this project?</p>
         <div className="flex gap-2">
           <button
@@ -116,23 +116,19 @@ export default function ProjectsAdminPage() {
               toast.dismiss(toastId);
               handleDelete(id);
             }}
-            className="px-3 py-1 text-xs bg-destructive/15 text-destructive rounded hover:bg-destructive/25"
+            className="rounded px-3 py-1 text-xs bg-destructive/15 text-destructive hover:bg-destructive/25"
           >
             Yes, Delete
           </button>
           <button
             onClick={() => toast.dismiss(toastId)}
-            className="px-3 py-1 text-xs bg-muted text-foreground rounded hover:bg-muted/80"
+            className="rounded px-3 py-1 text-xs bg-muted text-foreground hover:bg-muted/80"
           >
             Cancel
           </button>
         </div>
-      </div>,
-      {
-        autoClose: false,
-        closeOnClick: false,
-      },
-    );
+      </div>
+    ), { duration: Infinity });
   };
 
 const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {

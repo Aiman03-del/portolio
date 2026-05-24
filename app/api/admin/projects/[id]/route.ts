@@ -2,8 +2,10 @@ import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -27,7 +29,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
     const { data, error } = await adminSupabase
       .from('projects')
       .update(projectData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single();
     
@@ -36,13 +38,18 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       ...data,
       thumbnail_url: data.image_url ?? null,
     });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to update project' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error?.message ?? 'Failed to update project' },
+      { status: 500 },
+    );
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   try {
+    const { id } = await params;
+
     const supabase = await createClient();
     const {
       data: { user },
@@ -54,11 +61,14 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       process.env.SUPABASE_SERVICE_ROLE_KEY!,
     );
 
-    const { error } = await adminSupabase.from('projects').delete().eq('id', params.id);
+    const { error } = await adminSupabase.from('projects').delete().eq('id', id);
     if (error) throw error;
     
     return NextResponse.json({ success: true });
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
+  } catch (error: any) {
+    return NextResponse.json(
+      { error: error?.message ?? 'Failed to delete project' },
+      { status: 500 },
+    );
   }
 }

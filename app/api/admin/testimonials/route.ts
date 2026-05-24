@@ -1,12 +1,13 @@
 import { createClient } from '@/lib/supabase/server';
 import { NextRequest, NextResponse } from 'next/server';
+import { normalizeTestimonial } from '@/lib/db/testimonials';
 
 export async function GET() {
   try {
     const supabase = await createClient();
     const { data, error } = await supabase.from('testimonials').select('*').order('order_index', { ascending: true });
     if (error) throw error;
-    return NextResponse.json(data);
+    return NextResponse.json((data ?? []).map(normalizeTestimonial));
   } catch (error) {
     return NextResponse.json({ error: 'Failed to fetch testimonials' }, { status: 500 });
   }
@@ -57,7 +58,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await adminSupabase.from('testimonials').insert([row]).select().single();
     if (error) throw error;
-    return NextResponse.json(data);
+    return NextResponse.json(normalizeTestimonial(data));
   } catch (error: any) {
     console.error('admin/testimonials POST error:', error);
     const errorBody: any = {

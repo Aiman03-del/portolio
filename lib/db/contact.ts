@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
+import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
 export interface ContactMessage {
   id: string;
@@ -10,9 +11,19 @@ export interface ContactMessage {
   created_at: string;
 }
 
+function createAdminSupabaseClient() {
+  return createSupabaseClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+  );
+}
+
 export async function getContactMessages() {
-  const supabase = await createClient();
-  const { data, error } = await supabase.from('contact_messages').select('*').order('created_at', { ascending: false });
+  const supabase = createAdminSupabaseClient();
+  const { data, error } = await supabase
+    .from('contact_messages')
+    .select('*')
+    .order('created_at', { ascending: false });
   if (error) throw error;
   return data as ContactMessage[];
 }
