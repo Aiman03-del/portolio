@@ -120,19 +120,34 @@ export function HeroSection({ stats }: HeroSectionProps) {
       {/* ── FULL-SCREEN BACKGROUND IMAGE ── */}
       <div className="absolute inset-0 z-0">
         {!imgError ? (
-          <Image
-            src="/profile.png"
-            alt="Aiman Uddin"
-            fill
-            onError={() => setImgError(true)}
-            className="object-cover object-center"
-            style={{
-              transform: 'none',
-              objectPosition: '85% 10%',
-            }}
-            priority
-            sizes="100vw"
-          />
+          <>
+            <Image
+              src="/aiman.png"
+              alt="Aiman Uddin"
+              fill
+              onError={() => setImgError(true)}
+              className="object-contain object-center md:hidden"
+              style={{
+                transform: 'none',
+                objectPosition: 'center top',
+              }}
+              priority
+              sizes="100vw"
+            />
+            <Image
+              src="/profile.png"
+              alt="Aiman Uddin"
+              fill
+              onError={() => setImgError(true)}
+              className="hidden object-cover object-center md:block"
+              style={{
+                transform: 'none',
+                objectPosition: '85% 10%',
+              }}
+              priority
+              sizes="100vw"
+            />
+          </>
         ) : (
           <div className="w-full h-full bg-neutral-900" />
         )}

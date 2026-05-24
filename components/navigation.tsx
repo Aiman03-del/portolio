@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const NAV_LINKS = [
   { label: 'Home', href: '/' },
@@ -36,17 +37,9 @@ export function Navigation() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
             <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center text-sm font-black transition-all duration-300"
-              style={{
-                background: 'linear-gradient(135deg, #92590a, #d69e2e)',
-                color: '#0c0b09',
-                boxShadow: '0 4px 16px rgba(180,120,20,0.3)',
-              }}
+              className="relative w-11 h-11 overflow-hidden rounded-lg transition-all duration-300"
             >
-              {/* Diamond / code icon */}
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" />
-              </svg>
+              <Image src="/logo.png" alt="Aiman Uddin Siam logo" fill className="object-cover" priority />
             </div>
             <div>
               <div className="text-sm font-bold text-white leading-none">Aiman</div>

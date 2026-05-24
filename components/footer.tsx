@@ -1,10 +1,20 @@
+import Image from 'next/image';
+
 export function Footer() {
   return (
     <footer className="bg-card/30 border-t border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
-            <p className="text-xl font-light tracking-widest text-accent mb-4">AS.</p>
+            <div className="mb-4 flex items-center gap-3">
+              <div className="relative h-12 w-12 overflow-hidden rounded-lg border border-border/60 bg-transparent shadow-sm">
+                <Image src="/logo.png" alt="Aiman Uddin Siam logo" fill className="object-cover" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold tracking-[0.18em] uppercase text-accent leading-none">Aiman</p>
+                <p className="text-xs text-muted-foreground leading-none mt-1">Uddin Siam</p>
+              </div>
+            </div>
             <p className="text-sm text-muted-foreground font-light">Full-stack developer crafting premium digital experiences.</p>
           </div>
           <div>

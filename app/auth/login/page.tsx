@@ -40,6 +40,15 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const handleBack = () => {
+    if (window.history.length > 1) {
+      router.back();
+      return;
+    }
+
+    router.push('/');
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -71,6 +80,17 @@ export default function LoginPage() {
         </div>
       ) : (
       <div className="w-full max-w-md space-y-8">
+        <div className="flex justify-start">
+          <button
+            type="button"
+            onClick={handleBack}
+            className="inline-flex items-center gap-2 rounded-full border border-border bg-card/50 px-4 py-2 text-sm text-muted-foreground transition-colors hover:border-accent/40 hover:text-foreground"
+          >
+            <span aria-hidden="true">←</span>
+            Back
+          </button>
+        </div>
+
         <div className="text-center space-y-2">
           <h1 className="text-4xl font-light tracking-wider text-foreground">Admin</h1>
           <p className="text-muted-foreground text-sm">Access the portfolio administration panel</p>
