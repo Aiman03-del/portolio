@@ -3,10 +3,12 @@ import { GrainOverlay } from '@/components/grain-overlay';
 import { Navigation } from '@/components/navigation';
 import { Footer } from '@/components/footer';
 import { HeroSection } from '@/components/hero-section';
+import { BlogSection } from '@/components/blog-section';
 import { ProjectsSection } from '@/components/projects-section';
 import { AboutSection } from '@/components/about-section';
 import ContactSections from '@/components/ui/contact-sections';
 import { TestimonialsTechnologiesSection } from '@/components/testimonials-technologies-section';
+import { getBlogPosts } from '@/lib/db/blog';
 import { getProjects } from '@/lib/db/projects';
 import { getSkills } from '@/lib/db/skills';
 import { getTestimonials } from '@/lib/db/testimonials';
@@ -17,10 +19,11 @@ function getExperienceYears(startYear = 2023) {
 }
 
 export default async function Page() {
-  const [projects, skills, testimonials] = await Promise.all([
+  const [projects, skills, testimonials, blogPosts] = await Promise.all([
     getProjects(),
     getSkills(),
     getTestimonials(),
+    getBlogPosts(),
   ]);
 
   const stats = [
@@ -72,6 +75,7 @@ export default async function Page() {
         {projects && projects.length > 0 && <ProjectsSection projects={projects} />}
         {skills && skills.length > 0 && <AboutSection skills={skills} />}
         <TestimonialsTechnologiesSection testimonials={testimonials ?? []} skills={skills ?? []} />
+        <BlogSection posts={blogPosts ?? []} />
         <ContactSections />
       </main>
       <Footer />
