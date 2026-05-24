@@ -19,7 +19,7 @@ const contactMethods: ContactMethod[] = [
   {
     icon: <Mail className="h-6 w-6" />,
     label: 'Email',
-    href: 'mailto:hello@aiman.dev',
+    href: 'mailto:ausiaam83@gmail.com',
   },
   {
     icon: <Linkedin className="h-6 w-6" />,
